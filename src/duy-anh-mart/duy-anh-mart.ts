@@ -49,7 +49,7 @@ export class DuyAnhMart {
 
   @computedFrom("currentProduct.price")
   get canEditPrice() {
-    const priceFound = this.currentProduct?.price;
+    const priceFound = this.currentProduct?.price !== undefined;
     return priceFound;
   }
 

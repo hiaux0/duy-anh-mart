@@ -123,16 +123,18 @@
 
     <!-- Calculate Session -->
     <div class="rightContainer">
+      <h3>Hoa Don</h3>
       <div class="sessionContainer">
         <div class="currentSessionContainer">
           <!-- table header -->
           <div class="sessionProduct__tableHeader">
-            <div class="sessionProduct__header--numbering">#</div>
-            <div class="sessionProduct__price">Gia</div>
-            <div class="sessionProduct__header--amount">SoLg</div>
+            <div class="sessionProduct__header--numbering">TT</div>
             <div class="sessionProduct__header--name">Ten</div>
+            <div class="sessionProduct__header--amount">S.luong</div>
             <!-- <div class="sessionProduct__header">Gio</div> -->
-            <div class="sessionProduct__header--code">Code</div>
+            <!-- <div class="sessionProduct__header--code">Code</div> -->
+            <div class="sessionProduct__header--price">D.gia</div>
+            <div class="sessionProduct__header--price">T.Tien</div>
           </div>
 
           <!-- table body -->
@@ -141,11 +143,11 @@
             class="sessionProduct"
           >
             <div class="sessionProduct__code--numbering">${$index + 1}</div>
-            <!-- price -->
-            <div class="sessionProduct__price">
-              ${(sessionProduct.price * sessionProduct.count).toLocaleString()}
-            </div>
+            <!-- name -->
+            <div class="sessionProduct__code--name">${sessionProduct.name}</div>
 
+
+            <!-- amount -->
             <div class="sessionProduct__code--amount">
               <input
                 ref="amountForProductRef"
@@ -156,12 +158,18 @@
               />
             </div>
 
-            <!-- name -->
-            <div class="sessionProduct__code--name">${sessionProduct.name}</div>
             <!-- time -->
             <!-- <div class="sessionProduct__code--"> ${sessionProduct.time} </div> -->
             <!-- code -->
-            <div class="sessionProduct__code--code">${sessionProduct.code}</div>
+            <!-- <div class="sessionProduct__code--code">${sessionProduct.code}</div> -->
+
+            <!-- price -->
+            <div class="sessionProduct__code--price">
+              ${(sessionProduct.price).toLocaleString()}
+            </div>
+            <div class="sessionProduct__code--priceTotal">
+              ${(sessionProduct.price * sessionProduct.count).toLocaleString()}
+            </div>
 
             <!-- timestamp -->
           </div>
@@ -172,10 +180,9 @@
             VND
             <strong>${sessionSum.toLocaleString()}</strong>
           </div>
-
-          <div class="deleteButtonContainer">
+          <!-- <div class="deleteButtonContainer">
             <button click.delegate="clearSession()">Xoa</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
