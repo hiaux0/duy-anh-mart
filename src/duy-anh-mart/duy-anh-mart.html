@@ -1,0 +1,194 @@
+<template>
+  <require from="./value-converter/addCommaToView"></require>
+
+  <div class="duyAnhMart">
+    <!-- Enter price and manage -->
+
+    <div class="leftContainer">
+      <h3>🔎 Tim Gia</h3>
+      <input
+        ref="productCodeInputRef"
+        class="scannerInput"
+        type="text"
+        autofocus
+        value.bind="productCode"
+        placeholder="Chup code gia"
+      />
+      <div class="productContainer">
+        <div class="productPriceContainer">
+          <!-- <label>Gia:</label> -->
+          <span class="productPrice__currency">VND</span>
+          <template if.bind="currentProduct.price">
+            <strong class="productPrice__value"
+              >${currentProduct.price.toLocaleString()}</strong
+            >
+          </template>
+          <!-- No price -->
+          <span class="productPrice__notFound" if.bind="priceNotFound"
+            >⚠️ Ko tim thay gia</span
+          >
+        </div>
+        <span class="productName">${currentProduct.name}</span>
+
+        <!-- <div class="amountForProductContainer">
+          <label for="amountForProduct">So Luong</label>
+          <input
+            ref="amountForProductRef"
+            type="number"
+            id="amountForProduct"
+            value.bind="amountForProduct"
+          />
+        </div> -->
+      </div>
+      <hr />
+      <hr />
+
+      <!-- Them mat hang -->
+      <div class="manageProductsContainer ${priceNotFound ? '' : 'disabled'}">
+        <h5>➕ Them mat hang</h5>
+        <div class="addNewProductContainer">
+          <div>
+            <label for="">Ten</label>
+            <input
+              ref="newProductNameInputRef"
+              class="newProductName"
+              type="text"
+              disabled.bind="!priceNotFound"
+              value.bind="newProductName"
+            />
+          </div>
+
+          <div>
+            <label for="">Gia moi</label>
+            <input
+              ref="newProductPriceInputRef"
+              type="number"
+              disabled.bind="!priceNotFound"
+              value.bind="newProductPrice"
+            />
+            <!-- disabled.bind="!priceNotFound" -->
+            <label for="addThousandInput">1000 VND</label>
+          </div>
+
+          <button
+            disabled.bind="!priceNotFound"
+            click.delegate="addNewProduct()"
+          >
+            Them
+          </button>
+        </div>
+        <div if.bind="newlyAddedProduct" class="newlyAddedContainer">
+          ✅ da them "${newlyAddedProduct.name}" thanh cong voi gia
+          "${newlyAddedProduct.price}" VND
+        </div>
+      </div>
+      <hr />
+      <hr />
+
+      <!-- Sua gia -->
+      <div class="existingProductContainer ${canEditPrice ? '' : 'disabled'}">
+        <h5>✏️ Sua gia</h5>
+        <div>
+          <label for="">VND</label>
+          <input
+            disabled.bind="!canEditPrice"
+            type="text"
+            value.bind="updatedProductPrice | addCommaToView"
+          />
+        </div>
+        <div>
+          <label for="">Ten</label>
+          <input
+            disabled.bind="!canEditPrice"
+            type="text"
+            value.bind="updatedProductName"
+          />
+        </div>
+        <button disabled.bind="!canEditPrice" click.delegate="updateProduct()">
+          Sua gia mat hang
+        </button>
+        <button
+          class="deleteProductButton"
+          disabled.bind="!canEditPrice"
+          click.delegate="deleteProduct()"
+        >
+          🗑️ Bo hang nay di
+        </button>
+      </div>
+
+      <!-- <hr />
+      <hr />
+      <h3>Danh Ba</h3> -->
+    </div>
+
+    <!-- Calculate Session -->
+    <div class="rightContainer">
+      <div class="sessionContainer">
+        <div class="currentSessionContainer">
+          <!-- table header -->
+          <div class="sessionProduct__tableHeader">
+            <div class="sessionProduct__header--numbering">#</div>
+            <div class="sessionProduct__price">Gia</div>
+            <div class="sessionProduct__header--amount">SoLg</div>
+            <div class="sessionProduct__header--name">Ten</div>
+            <!-- <div class="sessionProduct__header">Gio</div> -->
+            <div class="sessionProduct__header--code">Code</div>
+          </div>
+
+          <!-- table body -->
+          <div
+            repeat.for="sessionProduct of sessionCollection"
+            class="sessionProduct"
+          >
+            <div class="sessionProduct__code--numbering">${$index + 1}</div>
+            <!-- price -->
+            <div class="sessionProduct__price">
+              ${(sessionProduct.price * sessionProduct.count).toLocaleString()}
+            </div>
+
+            <div class="sessionProduct__code--amount">
+              <input
+                ref="amountForProductRef"
+                class="sessionProduct__amount"
+                type="number"
+                value.bind="sessionProduct.count"
+                change.delegate="calculateSessionSum()"
+              />
+            </div>
+
+            <!-- name -->
+            <div class="sessionProduct__code--name">${sessionProduct.name}</div>
+            <!-- time -->
+            <!-- <div class="sessionProduct__code--"> ${sessionProduct.time} </div> -->
+            <!-- code -->
+            <div class="sessionProduct__code--code">${sessionProduct.code}</div>
+
+            <!-- timestamp -->
+          </div>
+        </div>
+
+        <div class="sessionFooter">
+          <div class="sessionSum">
+            VND
+            <strong>${sessionSum.toLocaleString()}</strong>
+          </div>
+
+          <div class="deleteButtonContainer">
+            <button click.delegate="clearSession()">Xoa</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <label class="item" for="uploadDatabase">Upload</label>
+  <input
+    type="file"
+    id="uploadDatabase"
+    name="avatar"
+    accept="application/json"
+    files.bind="uploadedDatabaseJson"
+    style="display: none"
+    change.delegate="dev_uploadDatabaseJson()"
+  />
+</template>

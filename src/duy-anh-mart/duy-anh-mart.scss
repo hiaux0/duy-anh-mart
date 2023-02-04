@@ -1,0 +1,177 @@
+$textColor: #333;
+$borderColor: $textColor;
+
+$mainPadding: 30px;
+
+.duyAnhMart {
+  display: flex;
+  padding: 30px;
+  background-color: white;
+  color: $textColor;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  .leftContainer {
+    width: 50%;
+    max-width: 340px;
+    margin-right: 25px;
+
+    .scannerInput {
+      margin-bottom: 20px;
+    }
+
+    .productContainer {
+      margin-bottom: 40px;
+      font-size: 22px;
+
+      .amountForProductContainer {
+        label {
+          font-size: 14px;
+        }
+
+        input {
+          width: 50px;
+        }
+      }
+
+      .productName {
+        font-size: 20px;
+      }
+
+      .productPriceContainer {
+        min-height: 40px;
+
+        .productPrice__notFound {
+          font-size: 22px;
+        }
+      }
+    }
+
+    .manageProductsContainer,
+    .existingProductContainer {
+      &.disabled * {
+        opacity: 0.6;
+        color: gray;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      input[type='text'],
+      input[type='number'] {
+        width: 100px;
+      }
+    }
+
+    .existingProductContainer {
+      .deleteProductButton {
+        margin-left: 80px;
+      }
+    }
+
+    .manageProductsContainer {
+      .addNewProductContainer {
+        .newProductName {
+          width: 150px;
+        }
+      }
+
+      .newlyAddedContainer {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .rightContainer {
+    width: 60%;
+
+    .sessionContainer {
+      padding: 15px;
+      border: 1px solid $borderColor;
+      width: calc(100% - 30px); // $mainPadding
+
+      .sessionProduct_header {
+        display: flex;
+        border-bottom: 1px solid $borderColor;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+      }
+
+      .sessionProduct,
+      .sessionProduct__tableHeader {
+        display: flex;
+        // justify-content: space-between;
+        align-items: center;
+
+        .sessionProduct__price {
+          width: 120px;
+        }
+
+        div[class|=sessionProduct__code],
+        div[class|=sessionProduct__header] {
+          font-size: medium;
+        }
+
+        .sessionProduct__code,
+        .sessionProduct__header {
+          &--numbering {
+            width: 25px;
+          }
+
+          &--amount {
+            width: 50px;
+
+            .sessionProduct__amount {
+              border: none;
+              width: 38px;
+            }
+          }
+
+          &--name {
+            width: 230px;
+          }
+
+          &--code {
+            width: 15px;
+          }
+        }
+      }
+
+      .sessionProduct {
+        margin: 4px 0;
+
+        &:hover {
+          background-color: goldenrod;
+        }
+      }
+
+      .sessionProduct__tableHeader {
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid black;
+      }
+
+      .sessionFooter {
+        display: flex;
+        margin-top: 20px;
+        justify-content: space-between;
+
+        .sessionSum {
+          font-size: 30px;
+          padding: 5px 15px;
+          border-top: 1px solid $borderColor;
+        }
+
+        .deleteButtonContainer {
+          display: flex;
+          align-items: center;
+
+          button {
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+}
