@@ -4,6 +4,10 @@ $borderColor: $textColor;
 $mainPadding: 30px;
 
 .duyAnhMart {
+  hr {
+    opacity: 0.1;
+  }
+
   display: flex;
   padding: 30px;
   background-color: white;
@@ -20,6 +24,10 @@ $mainPadding: 30px;
 
     .scannerInput {
       margin-bottom: 20px;
+      width: 250px;
+      height: 40px;
+      padding: 15px;
+      font-size: 20px;
     }
 
     .productContainer {
@@ -85,6 +93,18 @@ $mainPadding: 30px;
 
   .rightContainer {
     width: 60%;
+
+    .instructionBoxContainer {
+      display: flex;
+      justify-content: end;
+
+      .instructionBox {
+        margin-bottom: 30px;
+        padding: 20px;
+        width: 314px;
+        border: 1px solid black;
+      }
+    }
 
     .sessionContainer {
       padding: 15px;
