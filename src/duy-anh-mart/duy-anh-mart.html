@@ -5,6 +5,27 @@
     <!-- Enter price and manage -->
 
     <div class="leftContainer">
+      <!-- instruction box -->
+      <div class="instructionBoxContainer">
+        <div>
+          Thông tin
+          <div class="instructionBox">
+            <!-- No Product code -->
+            <div if.bind="!productCode && currentProduct.price === undefined">
+              📢 &nbsp; Đang chờ chụp code (ấn ESC để chụp)
+            </div>
+            <!-- Product code, but no prce -->
+            <div if.bind="productCode && currentProduct.price === undefined">
+              🗳️ &nbsp; Chưa tìm thấy giá
+            </div>
+            <div if.bind="currentProduct.price !== undefined">
+              🎎 &nbsp; Đang thanh toán cho khách
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <h3>🔎 Tìm giá</h3>
       <input
         ref="productCodeInputRef"
@@ -97,7 +118,7 @@
             value.bind="updatedProductPrice | addCommaToView"
           />
         </div>
-        <div>
+        <div class="updateProduct__name">
           <label for="">Tên</label>
           <input
             ref="updateProductNameRef"
@@ -130,25 +151,6 @@
 
     <!-- Calculate Session -->
     <div class="rightContainer">
-      <div class="instructionBoxContainer">
-        <div>
-          Thông tin
-          <div class="instructionBox">
-            <!-- No Product code -->
-            <div if.bind="!productCode && currentProduct.price === undefined">
-              📢 &nbsp; Đang chờ chụp code (ấn ESC để chụp)
-            </div>
-            <!-- Product code, but no prce -->
-            <div if.bind="productCode && currentProduct.price === undefined">
-              🗳️ &nbsp; Chưa tìm thấy giá
-            </div>
-            <div if.bind="currentProduct.price !== undefined">
-              🎎 &nbsp; Đang thanh toán cho khách
-            </div>
-          </div>
-        </div>
-      </div>
-
       <h3>Hóa Đơn</h3>
       <div class="sessionContainer">
         <div class="currentSessionContainer">
