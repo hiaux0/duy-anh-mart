@@ -154,7 +154,7 @@ $mainPadding: 30px;
     }
 
     .rightContainer {
-      width: 75%;
+      width: 631px;
 
       .sessionContainer {
         padding: 15px;
@@ -223,6 +223,12 @@ $mainPadding: 30px;
           margin: 4px 0;
           cursor: pointer;
 
+          padding: 3px;
+
+          &:nth-of-type(even) {
+            background: #eee;
+          }
+
           &:hover {
             background-color: goldenrod;
           }
@@ -258,7 +264,6 @@ $mainPadding: 30px;
       }
     }
   }
-
 }
 
 .hiddenFooterContainer {
