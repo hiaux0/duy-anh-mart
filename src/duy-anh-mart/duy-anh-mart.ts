@@ -38,6 +38,7 @@ export class DuyAnhMart {
   private sessionCollection: SessionProduct[] = [];
   private amountForProduct: number;
   private showHelpContent = false;
+  private quickMode = QUICK_MODE;
 
   // currentProduct: Product = TEST_PRODUCT;
   currentProduct: Product;
@@ -208,13 +209,15 @@ export class DuyAnhMart {
   }
 
   private prepareToAddNewProduct() {
-    /* prettier-ignore */ console.log('>>>> _ >>>> ~ file: duy-anh-mart.ts ~ line 33 ~ prepareToAddNewProduct');
-    if (QUICK_MODE) {
+    /* prettier-ignore */ console.log('>>>> _ >>>> ~ file: duy-anh-mart.ts ~ line 214 ~ this.quickMode', this.quickMode)
+
+    if (this.quickMode) {
+      console.log('hereree')
       window.setTimeout(() => {
         this.productCodeInputRef.blur();
         // this.newProductPriceInputRef.focus();
         this.newProductNameInputRef.focus();
-      }, 0);
+      }, 100);
     }
   }
 

@@ -257,4 +257,14 @@ $mainPadding: 30px;
       }
     }
   }
+
+}
+
+.hiddenFooterContainer {
+  display: flex;
+  color: #aaa;
+
+  div {
+    margin-right: 20px;
+  }
 }

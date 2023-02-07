@@ -51,7 +51,7 @@
             </ol>
           </div>
           <div>
-            <h4>Thêm Sản phẩm </h4>
+            <h4>Thêm Sản phẩm</h4>
             <ol>
               <li>Khi chụp code ko ra giá</li>
               <li>Bạn có thể thêm giá ở phần dưới "🔎 Tìm giá</li>
@@ -125,7 +125,7 @@
           show.bind="priceNotFound"
           class="manageProductsContainer ${priceNotFound ? '' : 'disabled'}"
         >
-          <h4>➕➕ &nbsp; Thêm sản phẩm  &nbsp; ➕ ➕</h4>
+          <h4>➕➕ &nbsp; Thêm sản phẩm &nbsp; ➕ ➕</h4>
           <div class="addNewProductContainer">
             <div>
               <label for="">Tên</label>
@@ -273,14 +273,22 @@
     </div>
   </div>
 
-  <label class="item" for="uploadDatabase" style="color: #aaa">Upload</label>
-  <input
-    type="file"
-    id="uploadDatabase"
-    name="avatar"
-    accept="application/json"
-    files.bind="uploadedDatabaseJson"
-    style="display: none"
-    change.delegate="dev_uploadDatabaseJson()"
-  />
+  <div class="hiddenFooterContainer">
+    <div>
+      <label class="item" for="uploadDatabase">Upload</label>
+      <input
+        type="file"
+        id="uploadDatabase"
+        name="avatar"
+        accept="application/json"
+        files.bind="uploadedDatabaseJson"
+        style="display: none"
+        change.delegate="dev_uploadDatabaseJson()"
+      />
+    </div>
+    <div>
+      <label for="">Thêm hàng nhanh</label>
+      <input type="checkbox" checked.bind="quickMode">
+    </div>
+  </div>
 </template>
