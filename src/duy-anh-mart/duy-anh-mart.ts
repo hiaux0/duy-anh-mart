@@ -24,8 +24,10 @@ const QUICK_MODE = true;
 export class DuyAnhMart {
   private readonly sessionProduct: SessionProduct;
   private readonly shouldAutoAddThousand = true;
-  private readonly newProductPriceInputRef: HTMLElement;
+  private readonly newProductPriceInputRef: HTMLInputElement;
   private readonly newProductNameInputRef: HTMLInputElement;
+  private readonly updateProductPriceRef: HTMLInputElement;
+  private readonly updateProductNameRef: HTMLInputElement;
   private readonly productCodeInputRef: HTMLInputElement;
   private readonly amountForProductRef: HTMLInputElement;
 
@@ -125,6 +127,17 @@ export class DuyAnhMart {
     this.newProductPriceInputRef.addEventListener("keydown", (ev) => {
       if (ev.key === "Enter") {
         this.addNewProduct();
+      }
+    });
+
+    this.updateProductNameRef.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        this.updateProduct();
+      }
+    });
+    this.updateProductPriceRef.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        this.updateProduct();
       }
     });
   }

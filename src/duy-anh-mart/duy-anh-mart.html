@@ -20,7 +20,7 @@
           <span class="productPrice__currency">VND</span>
           <template if.bind="currentProduct.price">
             <strong class="productPrice__value"
-              >${currentProduct.price.toLocaleString()}</strong
+              >${currentProduct.price.toLocaleString("en")}</strong
             >
           </template>
           <!-- No price -->
@@ -91,6 +91,7 @@
         <div>
           <label for="">VND</label>
           <input
+            ref="updateProductPriceRef"
             disabled.bind="!canEditPrice"
             type="text"
             value.bind="updatedProductPrice | addCommaToView"
@@ -99,6 +100,7 @@
         <div>
           <label for="">Ten</label>
           <input
+            ref="updateProductNameRef"
             disabled.bind="!canEditPrice"
             type="text"
             value.bind="updatedProductName"
@@ -165,10 +167,10 @@
 
             <!-- price -->
             <div class="sessionProduct__code--price">
-              ${(sessionProduct.price).toLocaleString()}
+              ${(sessionProduct.price).toLocaleString("en")}
             </div>
             <div class="sessionProduct__code--priceTotal">
-              ${(sessionProduct.price * sessionProduct.count).toLocaleString()}
+              ${(sessionProduct.price * sessionProduct.count).toLocaleString("en")}
             </div>
 
             <!-- timestamp -->
@@ -178,7 +180,7 @@
         <div class="sessionFooter">
           <div class="sessionSum">
             VND
-            <strong>${sessionSum.toLocaleString()}</strong>
+            <strong>${sessionSum.toLocaleString("en")}</strong>
           </div>
           <!-- <div class="deleteButtonContainer">
             <button click.delegate="clearSession()">Xoa</button>

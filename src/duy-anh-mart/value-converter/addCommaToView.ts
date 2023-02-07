@@ -4,7 +4,7 @@ function replaceAll(target: string, search, replacement) {
 
 export class AddCommaToViewValueConverter {
   toView(numberValue: number) {
-    return numberValue?.toLocaleString();
+    return numberValue?.toLocaleString("en");
   }
 
   fromView(currentValue: string) {
