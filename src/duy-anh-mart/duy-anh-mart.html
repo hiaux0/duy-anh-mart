@@ -116,6 +116,11 @@
         >
           🗑️ Bỏ hàng này đi
         </button>
+
+        <div if.bind="showUpdatedMessage">
+          ✅ đã sửa "${updatedProductName}" thành công với giá
+          "${updatedProductPrice.toLocaleString("en")}" VND
+        </div>
       </div>
 
       <!-- <hr />

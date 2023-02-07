@@ -48,6 +48,8 @@ export class DuyAnhMart {
   productCode = "";
   @observable()
   newlyAddedProduct: Product;
+  @observable()
+  showUpdatedMessage = false;
 
   @computedFrom("currentProduct.price")
   get canEditPrice() {
@@ -198,6 +200,12 @@ export class DuyAnhMart {
     }, 5000);
   }
 
+  showUpdatedMessageChanged() {
+    window.setTimeout(() => {
+      this.showUpdatedMessage = false;
+    }, 5000);
+  }
+
   private prepareToAddNewProduct() {
     /* prettier-ignore */ console.log('>>>> _ >>>> ~ file: duy-anh-mart.ts ~ line 33 ~ prepareToAddNewProduct');
     if (QUICK_MODE) {
@@ -241,6 +249,8 @@ export class DuyAnhMart {
 
     /* prettier-ignore */ console.log('>>>> _ >>>> ~ file: duy-anh-mart.ts ~ line 158 ~ finalUpdated', finalUpdated);
     this.productDatabase.updateProduct(this.previousProductCode, finalUpdated);
+
+    this.showUpdatedMessage = true;
   }
 
   private deleteProduct(): void {
