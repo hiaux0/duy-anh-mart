@@ -2,215 +2,213 @@
   <require from="./value-converter/addCommaToView"></require>
 
   <div class="duyAnhMart">
-    <!-- Enter price and manage -->
-
-    <div class="leftContainer">
-      <!-- instruction box -->
-      <div class="instructionBoxContainer">
-        <div>
-          Thông tin
-          <div class="instructionBox">
-            <!-- No Product code -->
-            <div if.bind="!productCode && currentProduct.price === undefined">
-              📢 &nbsp; Đang chờ chụp code (ấn ESC để chụp)
-            </div>
-            <!-- Product code, but no prce -->
-            <div if.bind="productCode && currentProduct.price === undefined">
-              🗳️ &nbsp; Chưa tìm thấy giá
-            </div>
-            <div if.bind="currentProduct.price !== undefined">
-              🎎 &nbsp; Đang thanh toán cho khách
-            </div>
-          </div>
+    <!-- instruction box -->
+    <div class="instructionBoxContainer">
+      <div>
+        <div class="instructionBox">
+          Thông tin: &nbsp;
+          <!-- No Product code -->
+          <span if.bind="!productCode && currentProduct.price === undefined">
+            <em> 📢 &nbsp; Đang chờ chụp code (ấn ESC để chụp) 📢 </em>
+          </span>
+          <!-- Product code, but no prce -->
+          <span if.bind="productCode && currentProduct.price === undefined">
+            <em> ⚠️️ &nbsp; Chưa tìm thấy giá ⚠️ </em>
+          </span>
+          <span if.bind="currentProduct.price !== undefined">
+            <em> 🎎 &nbsp; Đang thanh toán cho khách 🎎 </em>
+          </span>
         </div>
       </div>
-
-
-      <h3>🔎 Tìm giá</h3>
-      <input
-        ref="productCodeInputRef"
-        class="scannerInput"
-        type="text"
-        autofocus
-        value.bind="productCode"
-        placeholder="Chụp code mặt hàng"
-      />
-      <div class="productContainer">
-        <div class="productPriceContainer">
-          <!-- <label>Gia:</label> -->
-          <span class="productPrice__currency">VND</span>
-          <template if.bind="currentProduct.price">
-            <strong class="productPrice__value"
-              >${currentProduct.price.toLocaleString("en")}</strong
-            >
-          </template>
-          <!-- No price -->
-          <span class="productPrice__notFound" if.bind="priceNotFound"
-            >⚠️ Ko tìm thấy giá</span
-          >
-        </div>
-        <span class="productName">${currentProduct.name}</span>
-
-        <!-- <div class="amountForProductContainer">
-          <label for="amountForProduct">So Luong</label>
-          <input
-            ref="amountForProductRef"
-            type="number"
-            id="amountForProduct"
-            value.bind="amountForProduct"
-          />
-        </div> -->
-      </div>
-      <hr />
-      <hr />
-
-      <!-- Them mat hang -->
-      <div class="manageProductsContainer ${priceNotFound ? '' : 'disabled'}">
-        <h5>➕ Thêm mặt hàng</h5>
-        <div class="addNewProductContainer">
-          <div>
-            <label for="">Tên</label>
-            <input
-              ref="newProductNameInputRef"
-              class="newProductName"
-              type="text"
-              disabled.bind="!priceNotFound"
-              value.bind="newProductName"
-            />
-          </div>
-
-          <div>
-            <label for="">Giá mới</label>
-            <input
-              ref="newProductPriceInputRef"
-              type="number"
-              disabled.bind="!priceNotFound"
-              value.bind="newProductPrice"
-            />
-            <!-- disabled.bind="!priceNotFound" -->
-            <label for="addThousandInput">1000 VND</label>
-          </div>
-
-          <button
-            disabled.bind="!priceNotFound"
-            click.delegate="addNewProduct()"
-          >
-            Them
-          </button>
-        </div>
-        <div if.bind="newlyAddedProduct" class="newlyAddedContainer">
-          ✅ đã thêm "${newlyAddedProduct.name}" thành công với giá
-          "${newlyAddedProduct.price}" VND
-        </div>
-      </div>
-      <hr />
-      <hr />
-
-      <!-- Sua gia -->
-      <div class="existingProductContainer ${canEditPrice ? '' : 'disabled'}">
-        <h5>✏️ Sửa giá</h5>
-        <div>
-          <label for="">VND</label>
-          <input
-            ref="updateProductPriceRef"
-            disabled.bind="!canEditPrice"
-            type="text"
-            value.bind="updatedProductPrice | addCommaToView"
-          />
-        </div>
-        <div class="updateProduct__name">
-          <label for="">Tên</label>
-          <input
-            ref="updateProductNameRef"
-            disabled.bind="!canEditPrice"
-            type="text"
-            value.bind="updatedProductName"
-          />
-        </div>
-        <button disabled.bind="!canEditPrice" click.delegate="updateProduct()">
-          Sửa giá mặt hàng
-        </button>
-        <button
-          class="deleteProductButton"
-          disabled.bind="!canEditPrice"
-          click.delegate="deleteProduct()"
-        >
-          🗑️ Bỏ hàng này đi
-        </button>
-
-        <div if.bind="showUpdatedMessage">
-          ✅ đã sửa "${updatedProductName}" thành công với giá
-          "${updatedProductPrice.toLocaleString("en")}" VND
-        </div>
-      </div>
-
-      <!-- <hr />
-      <hr />
-      <h3>Danh Ba</h3> -->
     </div>
 
-    <!-- Calculate Session -->
-    <div class="rightContainer">
-      <h3>Hóa Đơn</h3>
-      <div class="sessionContainer">
-        <div class="currentSessionContainer">
-          <!-- table header -->
-          <div class="sessionProduct__tableHeader">
-            <div class="sessionProduct__header--numbering">TT</div>
-            <div class="sessionProduct__header--name">Tên</div>
-            <div class="sessionProduct__header--amount">S.lượng</div>
-            <!-- <div class="sessionProduct__header">Gio</div> -->
-            <!-- <div class="sessionProduct__header--code">Code</div> -->
-            <div class="sessionProduct__header--price">D.giá</div>
-            <div class="sessionProduct__header--price">T.tiền</div>
-          </div>
-
-          <!-- table body -->
-          <div
-            repeat.for="sessionProduct of sessionCollection"
-            class="sessionProduct"
-          >
-            <div class="sessionProduct__code--numbering">${$index + 1}</div>
-            <!-- name -->
-            <div class="sessionProduct__code--name">${sessionProduct.name}</div>
-
-            <!-- amount -->
-            <div class="sessionProduct__code--amount">
+    <div class="appContainer">
+      <!-- Enter price and manage -->
+      <div class="leftContainer">
+        <h2>🔎 Tìm giá</h2>
+        <div class="findProductContainer">
+          <input
+            ref="productCodeInputRef"
+            class="scannerInput"
+            type="text"
+            autofocus
+            value.bind="productCode"
+            placeholder="Chụp code mặt hàng"
+          />
+          <div class="productContainer">
+            <div class="productPriceContainer">
+              <!-- <label>Gia:</label> -->
+              <span class="productPrice__currency">VND</span>
+              <template if.bind="currentProduct.price">
+                <strong class="productPrice__value"
+                  >${currentProduct.price.toLocaleString("en")}</strong
+                >
+              </template>
+              <!-- No price -->
+              <span class="productPrice__notFound" if.bind="priceNotFound"
+                >⚠️ Ko tìm thấy giá</span
+              >
+            </div>
+            <span class="productName">${currentProduct.name}</span>
+            <!-- <div class="amountForProductContainer">
+              <label for="amountForProduct">So Luong</label>
               <input
                 ref="amountForProductRef"
-                class="sessionProduct__amount"
                 type="number"
-                value.bind="sessionProduct.count"
-                change.delegate="calculateSessionSum()"
+                id="amountForProduct"
+                value.bind="amountForProduct"
               />
-            </div>
-
-            <!-- time -->
-            <!-- <div class="sessionProduct__code--"> ${sessionProduct.time} </div> -->
-            <!-- code -->
-            <!-- <div class="sessionProduct__code--code">${sessionProduct.code}</div> -->
-
-            <!-- price -->
-            <div class="sessionProduct__code--price">
-              ${(sessionProduct.price).toLocaleString("en")}
-            </div>
-            <div class="sessionProduct__code--priceTotal">
-              ${(sessionProduct.price *
-              sessionProduct.count).toLocaleString("en")}
-            </div>
-
-            <!-- timestamp -->
+            </div> -->
           </div>
         </div>
-
-        <div class="sessionFooter">
-          <div class="sessionSum">
-            VND
-            <strong>${sessionSum.toLocaleString("en")}</strong>
+        <!-- Them mat hang -->
+        <div
+          show.bind="priceNotFound"
+          class="manageProductsContainer ${priceNotFound ? '' : 'disabled'}"
+        >
+          <h5>➕ Thêm mặt hàng</h5>
+          <div class="addNewProductContainer">
+            <div>
+              <label for="">Tên</label>
+              <input
+                ref="newProductNameInputRef"
+                class="newProductName"
+                type="text"
+                disabled.bind="!priceNotFound"
+                value.bind="newProductName"
+              />
+            </div>
+            <div>
+              <label for="">Giá mới</label>
+              <input
+                ref="newProductPriceInputRef"
+                type="number"
+                disabled.bind="!priceNotFound"
+                value.bind="newProductPrice"
+              />
+              <!-- disabled.bind="!priceNotFound" -->
+              <label for="addThousandInput">1000 VND</label>
+            </div>
+            <button
+              disabled.bind="!priceNotFound"
+              click.delegate="addNewProduct()"
+            >
+              Them
+            </button>
           </div>
-          <!-- <div class="deleteButtonContainer">
-            <button click.delegate="clearSession()">Xoa</button>
-          </div> -->
+          <div if.bind="newlyAddedProduct" class="newlyAddedContainer">
+            ✅ đã thêm <strong>"${newlyAddedProduct.name}"</strong> thành công
+            với giá
+            <strong>"${newlyAddedProduct.price.toLocaleString("en")}"</strong>
+            VND
+          </div>
+        </div>
+        <!-- Sua gia -->
+        <div
+          show.bind="canEditPrice"
+          class="existingProductContainer ${canEditPrice ? '' : 'disabled'}"
+        >
+          <h5>✏️ Sửa giá</h5>
+          <div>
+            <label for="">VND</label>
+            <input
+              ref="updateProductPriceRef"
+              disabled.bind="!canEditPrice"
+              type="text"
+              value.bind="updatedProductPrice | addCommaToView"
+            />
+          </div>
+          <div class="updateProduct__name">
+            <label for="">Tên</label>
+            <input
+              ref="updateProductNameRef"
+              disabled.bind="!canEditPrice"
+              type="text"
+              value.bind="updatedProductName"
+            />
+          </div>
+          <button
+            disabled.bind="!canEditPrice"
+            click.delegate="updateProduct()"
+          >
+            Sửa giá mặt hàng
+          </button>
+          <button
+            class="deleteProductButton"
+            disabled.bind="!canEditPrice"
+            click.delegate="deleteProduct()"
+          >
+            🗑️ Bỏ hàng này đi
+          </button>
+          <div if.bind="showUpdatedMessage">
+            ✅ đã sửa <strong>"${updatedProductName}"</strong> thành công với
+            giá
+            <strong>"${updatedProductPrice.toLocaleString("en")}"</strong> VND
+          </div>
+        </div>
+        <!-- <hr />
+        <hr />
+        <h3>Danh Ba</h3> -->
+      </div>
+      <!-- Calculate Session -->
+      <div class="rightContainer">
+        <h2>Hóa Đơn</h2>
+        <div class="sessionContainer">
+          <div class="currentSessionContainer">
+            <!-- table header -->
+            <div class="sessionProduct__tableHeader">
+              <div class="sessionProduct__header--numbering">TT</div>
+              <div class="sessionProduct__header--name">Tên</div>
+              <div class="sessionProduct__header--amount">S.lượng</div>
+              <!-- <div class="sessionProduct__header">Gio</div> -->
+              <!-- <div class="sessionProduct__header--code">Code</div> -->
+              <div class="sessionProduct__header--price">D.giá</div>
+              <div class="sessionProduct__header--price">T.tiền</div>
+            </div>
+            <!-- table body -->
+            <div
+              repeat.for="sessionProduct of sessionCollection"
+              class="sessionProduct"
+            >
+              <div class="sessionProduct__code--numbering">${$index + 1}</div>
+              <!-- name -->
+              <div class="sessionProduct__code--name">
+                ${sessionProduct.name}
+              </div>
+              <!-- amount -->
+              <div class="sessionProduct__code--amount">
+                <input
+                  ref="amountForProductRef"
+                  class="sessionProduct__amount"
+                  type="number"
+                  value.bind="sessionProduct.count"
+                  change.delegate="calculateSessionSum()"
+                />
+              </div>
+              <!-- time -->
+              <!-- <div class="sessionProduct__code--"> ${sessionProduct.time} </div> -->
+              <!-- code -->
+              <!-- <div class="sessionProduct__code--code">${sessionProduct.code}</div> -->
+              <!-- price -->
+              <div class="sessionProduct__code--price">
+                ${(sessionProduct.price).toLocaleString("en")}
+              </div>
+              <div class="sessionProduct__code--priceTotal">
+                ${(sessionProduct.price *
+                sessionProduct.count).toLocaleString("en")}
+              </div>
+              <!-- timestamp -->
+            </div>
+          </div>
+          <div class="sessionFooter">
+            <div class="sessionSum">
+              VND
+              <strong>${sessionSum.toLocaleString("en")}</strong>
+            </div>
+            <!-- <div class="deleteButtonContainer">
+              <button click.delegate="clearSessiondiv>Xoa</button>
+            </div> -->
+          </div>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ import "./duy-anh-mart.scss";
 /**
  * Quickly add new products
  */
-const QUICK_MODE = true;
+const QUICK_MODE = false;
 
 @autoinject()
 export class DuyAnhMart {
@@ -197,13 +197,13 @@ export class DuyAnhMart {
   newlyAddedProductChanged() {
     window.setTimeout(() => {
       this.newlyAddedProduct = undefined;
-    }, 5000);
+    }, 7000);
   }
 
   showUpdatedMessageChanged() {
     window.setTimeout(() => {
       this.showUpdatedMessage = false;
-    }, 5000);
+    }, 7000);
   }
 
   private prepareToAddNewProduct() {
