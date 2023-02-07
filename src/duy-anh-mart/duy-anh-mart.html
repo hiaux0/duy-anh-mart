@@ -24,11 +24,15 @@
       </div>
 
       <!-- help -->
-      <div class="helpLabel" click.delegate="toggleHelp()">
+      <div ref="helpLabelRef" class="helpLabel" click.delegate="toggleHelp()">
         <span> ❔ Giúp </span>
       </div>
       <div class="helpContainer">
-        <div class="helpContent" if.bind="showHelpContent">
+        <div
+          class="helpContent"
+          show.bind="showHelpContent"
+          ref="helpContentRef"
+        >
           <div>
             <h4>Chụp Code Hàng</h4>
             <ol>
@@ -286,6 +290,9 @@
         style="display: none"
         change.delegate="dev_uploadDatabaseJson()"
       />
+    </div>
+    <div>
+      <div click.delegate="downloadDatabase()">Download</div>
     </div>
     <div>
       <label for="">Thêm hàng nhanh</label>

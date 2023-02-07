@@ -24,6 +24,8 @@ const QUICK_MODE = false;
 export class DuyAnhMart {
   private readonly sessionProduct: SessionProduct;
   private readonly shouldAutoAddThousand = true;
+  private readonly helpContentRef: HTMLElement;
+  private readonly helpLabelRef: HTMLElement;
   private readonly newProductPriceInputRef: HTMLInputElement;
   private readonly newProductNameInputRef: HTMLInputElement;
   private readonly updateProductPriceRef: HTMLInputElement;
@@ -37,7 +39,7 @@ export class DuyAnhMart {
   private updatedProductPrice: number;
   private sessionCollection: SessionProduct[] = [];
   private amountForProduct: number;
-  private showHelpContent = false;
+  private showHelpContent = true;
   private quickMode = QUICK_MODE;
 
   // currentProduct: Product = TEST_PRODUCT;
@@ -99,6 +101,9 @@ export class DuyAnhMart {
   attached() {
     this.addListeners();
     this.addKeyListeners();
+    outsideListener(this.helpContentRef, [this.helpLabelRef], () => {
+      this.showHelpContent = false;
+    });
   }
 
   private addListeners() {
@@ -324,6 +329,37 @@ export class DuyAnhMart {
     this.showHelpContent = !this.showHelpContent;
   }
 
+  private downloadDatabase(): void {
+    function getRandomId() {
+      /**
+       * "0.g6ck5nyod4".substring(2, 9)
+       * -> g6ck5ny
+       */
+      return Math.random().toString(36).substring(2, 9);
+    }
+
+    function download(content: string, fileName: string) {
+      const element = document.createElement("a");
+      element.setAttribute(
+        "href",
+        "data:text/plain;charset=utf-8," + encodeURIComponent(content)
+      );
+      element.setAttribute("download", `${fileName}.json`);
+
+      element.style.display = "none";
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    }
+
+    const stringify = JSON.stringify(this.productDatabase.database, null, 4);
+    /* prettier-ignore */ console.log(">>>> _ >>>> ~ file: launch.ts ~ line 277 ~ stringify", stringify);
+    const fileName = "toan-bo-gia";
+    download(stringify, fileName);
+  }
+
   uploadedDatabaseJson;
   private async dev_uploadDatabaseJson() {
     const databaseData = await this.uploadedDatabaseJson[0].text();
@@ -336,6 +372,30 @@ function cloneDeep<T>(obj: T): T {
   return structuredClone
     ? structuredClone(obj)
     : JSON.parse(JSON.stringify(obj));
+}
+
+function outsideListener(
+  elementToObserve: HTMLElement,
+  ignoreElements: HTMLElement[],
+  onOutsideClick: () => void
+) {
+  document.addEventListener("click", (evt) => {
+    let targetEl = evt.target; // clicked element
+    do {
+      // @ts-ignore
+      if (ignoreElements.includes(targetEl)) {
+        return;
+      }
+      if (targetEl == elementToObserve) {
+        return;
+      }
+      // Go up the DOM
+      // @ts-ignore
+      targetEl = targetEl.parentNode;
+    } while (targetEl);
+    // This is a click outside.
+    onOutsideClick();
+  });
 }
 
 /**
