@@ -37,6 +37,7 @@ export class DuyAnhMart {
   private updatedProductPrice: number;
   private sessionCollection: SessionProduct[] = [];
   private amountForProduct: number;
+  private showHelpContent = true;
 
   // currentProduct: Product = TEST_PRODUCT;
   currentProduct: Product;
@@ -275,6 +276,7 @@ export class DuyAnhMart {
     this.productCodeInputRef.value = "";
     this.productCodeInputRef.focus();
     this.sessionSum = undefined;
+    this.showHelpContent = false;
 
     this.clearNewProductValues();
   }
@@ -290,6 +292,10 @@ export class DuyAnhMart {
       return acc;
     }, 0);
     this.sessionSum = sum;
+  }
+
+  private toggleHelp() {
+    this.showHelpContent = !this.showHelpContent;
   }
 
   uploadedDatabaseJson;

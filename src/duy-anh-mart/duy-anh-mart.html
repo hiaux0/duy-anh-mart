@@ -2,22 +2,81 @@
   <require from="./value-converter/addCommaToView"></require>
 
   <div class="duyAnhMart">
-    <!-- instruction box -->
-    <div class="instructionBoxContainer">
-      <div>
-        <div class="instructionBox">
-          Thông tin: &nbsp;
-          <!-- No Product code -->
-          <span if.bind="!productCode && currentProduct.price === undefined">
-            <em> 📢 &nbsp; Đang chờ chụp code (ấn ESC để chụp) 📢 </em>
-          </span>
-          <!-- Product code, but no prce -->
-          <span if.bind="productCode && currentProduct.price === undefined">
-            <em> ⚠️️ &nbsp; Chưa tìm thấy giá ⚠️ </em>
-          </span>
-          <span if.bind="currentProduct.price !== undefined">
-            <em> 🎎 &nbsp; Đang thanh toán cho khách 🎎 </em>
-          </span>
+    <div class="topContainer">
+      <!-- instruction box -->
+      <div class="instructionBoxContainer">
+        <div>
+          <div class="instructionBox">
+            Thông tin: &nbsp;
+            <!-- No Product code -->
+            <span if.bind="!productCode && currentProduct.price === undefined">
+              <em> 📢 &nbsp; Đang chờ chụp code (nhấn ESC để chụp) 📢 </em>
+            </span>
+            <!-- Product code, but no prce -->
+            <span if.bind="productCode && currentProduct.price === undefined">
+              <em> ⚠️️ &nbsp; Chưa tìm thấy giá ⚠️ </em>
+            </span>
+            <span if.bind="currentProduct.price !== undefined">
+              <em> 🎎 &nbsp; Đang thanh toán cho khách 🎎 </em>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- help -->
+      <div class="helpLabel" click.delegate="toggleHelp()">
+        <span> ❔ Giúp </span>
+      </div>
+      <div class="helpContainer">
+        <div class="helpContent" if.bind="showHelpContent">
+          <div>
+            <h4>Chụp Code Hàng</h4>
+            <ol>
+              <li>Trước khi chụp</li>
+              <ol>
+                <ol>
+                  <li>🖱️ Dùng chuột</li>
+                  <ol>
+                    <li>"🔎 Tìm giá" phía bên phải</li>
+                    <li>Nhấn vào "Chụp code sản phẩm "</li>
+                  </ol>
+                  <li>⌨️ Dùng bàn phím</li>
+                  <ol>
+                    <li>Hoặc là nhấn nút "ESC"</li>
+                  </ol>
+                </ol>
+              </ol>
+
+              <li>Dùng máy chụp để chụp code</li>
+            </ol>
+          </div>
+          <div>
+            <h4>Thêm Sản phẩm </h4>
+            <ol>
+              <li>Khi chụp code ko ra giá</li>
+              <li>Bạn có thể thêm giá ở phần dưới "🔎 Tìm giá</li>
+              <li>Gõ tên</li>
+              <li>Gõ gía</li>
+              <li>Thêm</li>
+              <ol>
+                <li>Nhấn phím "NHẬP"</li>
+                <li>Hoạc nhấn nút "Thêm"</li>
+              </ol>
+            </ol>
+          </div>
+          <div>
+            <h4>Sửa Giá</h4>
+            <ol>
+              <li>Giá và tên sản phẩm</li>
+              <li>Chỉnh tên</li>
+              <li>Chỉnh gía</li>
+              <li>Sửa</li>
+              <ol>
+                <li>Nhấn phím "NHẬP"</li>
+                <li>Hoạc nhấn nút "Sửa giá sản phẩm "</li>
+              </ol>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
@@ -33,7 +92,7 @@
             type="text"
             autofocus
             value.bind="productCode"
-            placeholder="Chụp code mặt hàng"
+            placeholder="Chụp code sản phẩm "
           />
           <div class="productContainer">
             <div class="productPriceContainer">
@@ -66,7 +125,7 @@
           show.bind="priceNotFound"
           class="manageProductsContainer ${priceNotFound ? '' : 'disabled'}"
         >
-          <h4>➕➕ &nbsp; Thêm mặt hàng &nbsp; ➕ ➕ </h4>
+          <h4>➕➕ &nbsp; Thêm sản phẩm  &nbsp; ➕ ➕</h4>
           <div class="addNewProductContainer">
             <div>
               <label for="">Tên</label>
@@ -93,7 +152,7 @@
               disabled.bind="!priceNotFound"
               click.delegate="addNewProduct()"
             >
-              Them
+              Thêm
             </button>
           </div>
           <div if.bind="newlyAddedProduct" class="newlyAddedContainer">
@@ -110,7 +169,7 @@
         >
           <h4>✏️️✏️ &nbsp; Sửa giá &nbsp; ✏️✏️</h4>
           <div>
-            <label for="">VND</label>
+            <label for="">Giá</label>
             <input
               ref="updateProductPriceRef"
               disabled.bind="!canEditPrice"
@@ -131,7 +190,7 @@
             disabled.bind="!canEditPrice"
             click.delegate="updateProduct()"
           >
-            Sửa giá mặt hàng
+            Sửa giá sản phẩm
           </button>
           <button
             class="deleteProductButton"

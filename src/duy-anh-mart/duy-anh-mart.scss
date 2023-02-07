@@ -17,16 +17,49 @@ $mainPadding: 30px;
     margin-top: 0;
   }
 
-  .instructionBoxContainer {
-    // display: flex;
-    justify-content: end;
-    font-size: 14px;
+  ol {
+    padding-left: 30px;
+  }
 
-    .instructionBox {
-      margin-bottom: 18px;
-      padding: 20px 0;
-      width: 384px;
-      border-bottom: 1px solid black;
+  li {
+    margin: 5px 0;
+  }
+
+  .topContainer {
+    display: flex;
+    justify-content: space-between;
+
+    .instructionBoxContainer {
+      // display: flex;
+      justify-content: end;
+      font-size: 14px;
+
+      .instructionBox {
+        margin-bottom: 18px;
+        padding: 20px 0;
+        width: 384px;
+        border-bottom: 1px solid black;
+      }
+    }
+
+    .helpLabel {
+      cursor: pointer;
+    }
+
+    .helpContainer {
+      position: absolute;
+      left: 57%;
+      top: 40px;
+
+      .helpContent {
+        width: 400px;
+        height: 743px;
+        padding-left: 10px;
+
+        border: 1px solid black;
+        background: white;
+        opacity: 0.95;
+      }
     }
   }
 
