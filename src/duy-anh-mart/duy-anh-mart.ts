@@ -146,7 +146,7 @@ export class DuyAnhMart {
     });
   }
 
-  private handleProductCodeChanged() {
+  private handleProductCodeChanged(shouldAddToCollection = true) {
     // if (this.productCode === '') {
     //   this.currentProduct = EMPTY_PRODUCT;
     //   return;
@@ -161,8 +161,10 @@ export class DuyAnhMart {
       this.updatedProductPrice = this.currentProduct.price;
       this.updatedProductName = this.currentProduct.name;
 
-      this.addToSessionCollection(product);
-      this.calculateSessionSum();
+      if (shouldAddToCollection) {
+        this.addToSessionCollection(product);
+        this.calculateSessionSum();
+      }
 
       // Clear code input, in order to scan new products
       this.productCode = "";
@@ -212,7 +214,7 @@ export class DuyAnhMart {
     /* prettier-ignore */ console.log('>>>> _ >>>> ~ file: duy-anh-mart.ts ~ line 214 ~ this.quickMode', this.quickMode)
 
     if (this.quickMode) {
-      console.log('hereree')
+      console.log("hereree");
       window.setTimeout(() => {
         this.productCodeInputRef.blur();
         // this.newProductPriceInputRef.focus();
@@ -254,7 +256,23 @@ export class DuyAnhMart {
     /* prettier-ignore */ console.log('>>>> _ >>>> ~ file: duy-anh-mart.ts ~ line 158 ~ finalUpdated', finalUpdated);
     this.productDatabase.updateProduct(this.previousProductCode, finalUpdated);
 
+    this.updateSessionCollection(finalUpdated);
+    this.calculateSessionSum();
+
+    this.currentProduct = finalUpdated;
     this.showUpdatedMessage = true;
+  }
+
+  private updateSessionCollection(finalUpdated: Product) {
+    const foundIndex = this.sessionCollection.findIndex(
+      (item) => item.code === this.previousProductCode
+    );
+    this.sessionCollection[foundIndex] = {
+      ...this.sessionCollection[foundIndex],
+      ...finalUpdated,
+    };
+
+    this.sessionCollection = cloneDeep(this.sessionCollection);
   }
 
   private deleteProduct(): void {
@@ -297,6 +315,11 @@ export class DuyAnhMart {
     this.sessionSum = sum;
   }
 
+  private setCurrentProduct(selectedSessionProduct: SessionProduct) {
+    this.productCode = selectedSessionProduct.code;
+    this.handleProductCodeChanged(false);
+  }
+
   private toggleHelp() {
     this.showHelpContent = !this.showHelpContent;
   }
@@ -307,6 +330,12 @@ export class DuyAnhMart {
     const databaseJson = JSON.parse(databaseData);
     this.productDatabase.updateWholeDatabase(databaseJson);
   }
+}
+
+function cloneDeep<T>(obj: T): T {
+  return structuredClone
+    ? structuredClone(obj)
+    : JSON.parse(JSON.stringify(obj));
 }
 
 /**

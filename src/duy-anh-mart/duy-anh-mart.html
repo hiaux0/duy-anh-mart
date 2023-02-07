@@ -228,6 +228,7 @@
             <div
               repeat.for="sessionProduct of sessionCollection"
               class="sessionProduct"
+              click.delegate="setCurrentProduct(sessionProduct)"
             >
               <div class="sessionProduct__code--numbering">${$index + 1}</div>
               <!-- name -->
@@ -288,7 +289,7 @@
     </div>
     <div>
       <label for="">Thêm hàng nhanh</label>
-      <input type="checkbox" checked.bind="quickMode">
+      <input type="checkbox" checked.bind="quickMode" />
     </div>
   </div>
 </template>
