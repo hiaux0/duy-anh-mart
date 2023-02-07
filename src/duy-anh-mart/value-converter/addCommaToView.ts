@@ -1,5 +1,5 @@
 function replaceAll(target: string, search, replacement) {
-  return target.replace(new RegExp(search, 'g'), replacement);
+  return target.replace(new RegExp(search, "g"), replacement);
 }
 
 export class AddCommaToViewValueConverter {
@@ -8,7 +8,12 @@ export class AddCommaToViewValueConverter {
   }
 
   fromView(currentValue: string) {
-    const result = replaceAll(currentValue, ',', '');
-    return Number(result);
+    const replcaed = replaceAll(currentValue, ",", "");
+    const result = Number(replcaed);
+    if (Number.isNaN(result)) {
+      return 0;
+    }
+
+    return result;
   }
 }
