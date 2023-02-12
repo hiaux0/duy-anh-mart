@@ -39,7 +39,7 @@ export class DuyAnhMart {
   private updatedProductPrice: number;
   private sessionCollection: SessionProduct[] = [];
   private amountForProduct: number;
-  private showHelpContent = true;
+  private showHelpContent = false;
   private quickMode = QUICK_MODE;
 
   // currentProduct: Product = TEST_PRODUCT;
