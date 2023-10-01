@@ -23,7 +23,7 @@ export class ProductDatabase {
   }
 
   updateWholeDatabase(newDatabase: any): void {
-    this.database = newDatabase;
+    this.database = { ...this.database, ...newDatabase };
     window.localStorage.setItem(
       DUY_ANH_MART_DB_KEY,
       JSON.stringify(newDatabase)
