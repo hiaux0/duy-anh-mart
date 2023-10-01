@@ -5,7 +5,7 @@ export interface Product {
 
 export interface SessionProduct extends Product {
   code: string;
-  time: string;
+  time?: string;
   count: number;
 }
 
@@ -18,3 +18,9 @@ export const TEST_PRODUCT: Product = {
   name: '',
   price: 123456,
 };
+
+export interface Customer {
+  name: string;
+  code: string;
+  phone: string;
+}

@@ -3,28 +3,8 @@
 
   <div class="duyAnhMart">
     <div class="topContainer">
-      <!-- instruction box -->
-      <div class="instructionBoxContainer">
-        <div>
-          <div class="instructionBox">
-            Thông tin: &nbsp;
-            <!-- No Product code -->
-            <span if.bind="!productCode && currentProduct.price === undefined">
-              <em> 📢 &nbsp; Đang chờ chụp code (nhấn ESC để chụp) 📢 </em>
-            </span>
-            <!-- Product code, but no prce -->
-            <span if.bind="productCode && currentProduct.price === undefined">
-              <em> ⚠️️ &nbsp; Chưa tìm thấy giá ⚠️ </em>
-            </span>
-            <span if.bind="currentProduct.price !== undefined">
-              <em> 🎎 &nbsp; Đang thanh toán cho khách 🎎 </em>
-            </span>
-          </div>
-        </div>
-      </div>
-
       <!-- help -->
-      <div ref="helpLabelRef" class="helpLabel" click.delegate="toggleHelp()">
+      <!-- <div ref="helpLabelRef" class="helpLabel" click.delegate="toggleHelp()">
         <span> ❔ Giúp </span>
       </div>
       <div class="helpContainer">
@@ -82,146 +62,155 @@
             </ol>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="appContainer">
       <!-- Enter price and manage -->
-      <div class="leftContainer">
-        <h2>🔎 Tìm giá</h2>
-        <div class="findProductContainer">
-          <input
-            ref="productCodeInputRef"
-            class="scannerInput"
-            type="text"
-            autofocus
-            value.bind="productCode"
-            placeholder="Chụp code sản phẩm "
-          />
-          <div class="productContainer">
-            <div class="productPriceContainer">
-              <!-- <label>Gia:</label> -->
-              <span class="productPrice__currency">VND</span>
-              <template if.bind="currentProduct.price">
-                <strong class="productPrice__value"
-                  >${currentProduct.price.toLocaleString("en")}</strong
-                >
-              </template>
-              <!-- No price -->
-              <span class="productPrice__notFound" if.bind="priceNotFound"
-                >⚠️ Ko tìm thấy giá</span
-              >
-            </div>
-            <span class="productName">${currentProduct.name}</span>
-            <!-- <div class="amountForProductContainer">
-              <label for="amountForProduct">So Luong</label>
-              <input
-                ref="amountForProductRef"
-                type="number"
-                id="amountForProduct"
-                value.bind="amountForProduct"
-              />
-            </div> -->
-          </div>
-        </div>
-        <!-- Them mat hang -->
-        <div
-          show.bind="priceNotFound"
-          class="manageProductsContainer ${priceNotFound ? '' : 'disabled'}"
-        >
-          <h4>➕➕ &nbsp; Thêm sản phẩm &nbsp; ➕ ➕</h4>
-          <div class="addNewProductContainer">
-            <div>
-              <label for="">Tên</label>
-              <input
-                ref="newProductNameInputRef"
-                class="newProductName"
-                type="text"
-                disabled.bind="!priceNotFound"
-                value.bind="newProductName"
-              />
-            </div>
-            <div>
-              <label for="">Giá mới</label>
-              <input
-                ref="newProductPriceInputRef"
-                type="number"
-                disabled.bind="!priceNotFound"
-                value.bind="newProductPrice"
-              />
-              <!-- disabled.bind="!priceNotFound" -->
-              <label for="addThousandInput">1000 VND</label>
-            </div>
-            <button
-              disabled.bind="!priceNotFound"
-              click.delegate="addNewProduct()"
-            >
-              Thêm
-            </button>
-          </div>
-          <div if.bind="newlyAddedProduct" class="newlyAddedContainer">
-            ✅ đã thêm <strong>"${newlyAddedProduct.name}"</strong> thành công
-            với giá
-            <strong>"${newlyAddedProduct.price.toLocaleString("en")}"</strong>
-            VND
-          </div>
-        </div>
-        <!-- Sua gia -->
-        <div
-          show.bind="canEditPrice"
-          class="existingProductContainer ${canEditPrice ? '' : 'disabled'}"
-        >
-          <h4>✏️️✏️ &nbsp; Sửa giá &nbsp; ✏️✏️</h4>
-          <div>
-            <label for="">Giá</label>
-            <input
-              ref="updateProductPriceRef"
-              disabled.bind="!canEditPrice"
-              type="text"
-              value.bind="updatedProductPrice | addCommaToView"
-            />
-          </div>
-          <div class="updateProduct__name">
-            <label for="">Tên</label>
-            <input
-              ref="updateProductNameRef"
-              disabled.bind="!canEditPrice"
-              type="text"
-              value.bind="updatedProductName"
-            />
-          </div>
-          <button
-            disabled.bind="!canEditPrice"
-            click.delegate="updateProduct()"
-          >
-            Sửa giá sản phẩm
-          </button>
-          <button
-            class="deleteProductButton"
-            disabled.bind="!canEditPrice"
-            click.delegate="deleteProduct()"
-          >
-            🗑️ Bỏ hàng này đi
-          </button>
-          <div if.bind="showUpdatedMessage">
-            ✅ đã sửa <strong>"${updatedProductName}"</strong> thành công với
-            giá
-            <strong>"${updatedProductPrice.toLocaleString("en")}"</strong> VND
-          </div>
-        </div>
-        <!-- <hr />
-        <hr />
-        <h3>Danh Ba</h3> -->
-      </div>
+      <div class="leftContainer"></div>
       <!-- Calculate Session -->
       <div class="rightContainer">
-        <h2>Hóa Đơn</h2>
+        <h2>Khach</h2>
+        <div class="customerContainer">
+          <div class="sessionContainer">
+            <div class="currentSessionContainer">
+              <!-- table header -->
+              <div class="sessionProduct__tableHeader">
+                <div class="sessionProduct__header--numbering">TT</div>
+                <div class="sessionProduct__header--code">Code</div>
+                <div class="sessionProduct__header--name">Tên</div>
+                <div class="sessionProduct__header--image">Anh</div>
+                <div class="sessionProduct__header--phone">Phone</div>
+                <!-- <div class="sessionProduct__header">Gio</div> -->
+                <!-- <div class="sessionProduct__header--code">Code</div> -->
+                <div class="sessionProduct__header--price">D.giá</div>
+                <div class="sessionProduct__header--price">T.tiền</div>
+              </div>
+              <!-- table body -->
+              <div
+                repeat.for="customer of customerDatabase"
+                class="sessionProduct"
+                click.delegate="setCurrentProduct(customer)"
+              >
+                <div class="sessionProduct__code--numbering">${$index + 1}</div>
+                <!-- code -->
+                <div class="sessionProduct__code--code">${customer.code}</div>
+                <!-- name -->
+                <div class="sessionProduct__code--name">${customer.name}</div>
+                <!-- image -->
+                <div class="sessionProduct__code--image">
+                  <!-- ${customer.image} -->
+                  <img
+                    if.bind="$index % 11 === 0"
+                    src="/static/clothing-images/1.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 1"
+                    src="/static/clothing-images/2.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 2"
+                    src="/static/clothing-images/3.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 3"
+                    src="/static/clothing-images/4.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 4"
+                    src="/static/clothing-images/5.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 5"
+                    src="/static/clothing-images/6.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 6"
+                    src="/static/clothing-images/7.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 7"
+                    src="/static/clothing-images/8.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 8"
+                    src="/static/clothing-images/9.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 9"
+                    src="/static/clothing-images/10.jpg"
+                    alt=""
+                    height="100"
+                  />
+                  <img
+                    if.bind="$index % 11 === 10"
+                    src="/static/clothing-images/11.jpg"
+                    alt=""
+                    height="100"
+                  />
+                </div>
+                <!-- amount -->
+                <div class="sessionProduct__code--phone">${customer.phone}</div>
+                <!-- <div class="sessionProduct__code--phone"> -->
+                  <!-- <input
+                    ref="amountForProductRef"
+                    class="sessionProduct__amount"
+                    type="number"
+                    value.bind="customer.count"
+                    change.delegate="calculateSessionSum()"
+                  /> -->
+                <!-- </div> -->
+                <!-- time -->
+                <!-- <div class="sessionProduct__code--"> ${customer.time} </div> -->
+                <!-- price -->
+                <div class="sessionProduct__code--price">
+                  ${(customer.price).toLocaleString("en")}
+                </div>
+                <div class="sessionProduct__code--priceTotal">
+                  ${(customer.price * customer.count).toLocaleString("en")}
+                </div>
+                <!-- timestamp -->
+              </div>
+            </div>
+            <div class="sessionFooter">
+              <div class="sessionSum">
+                VND
+                <strong>${sessionSum.toLocaleString("en")}</strong>
+              </div>
+              <!-- <div class="deleteButtonContainer">
+              <button click.delegate="clearSessiondiv>Xoa</button>
+            </div> -->
+            </div>
+          </div>
+        </div>
+
+        <h2>Kho</h2>
         <div class="sessionContainer">
           <div class="currentSessionContainer">
             <!-- table header -->
             <div class="sessionProduct__tableHeader">
               <div class="sessionProduct__header--numbering">TT</div>
+              <div class="sessionProduct__header--code">Code</div>
               <div class="sessionProduct__header--name">Tên</div>
+              <div class="sessionProduct__header--image">Anh</div>
               <div class="sessionProduct__header--amount">S.lượng</div>
               <!-- <div class="sessionProduct__header">Gio</div> -->
               <!-- <div class="sessionProduct__header--code">Code</div> -->
@@ -235,9 +224,83 @@
               click.delegate="setCurrentProduct(sessionProduct)"
             >
               <div class="sessionProduct__code--numbering">${$index + 1}</div>
+              <!-- code -->
+              <div class="sessionProduct__code--code">
+                ${sessionProduct.code}
+              </div>
               <!-- name -->
               <div class="sessionProduct__code--name">
                 ${sessionProduct.name}
+              </div>
+              <!-- image -->
+              <div class="sessionProduct__code--image">
+                <!-- ${sessionProduct.image} -->
+                <img
+                  if.bind="$index % 11 === 0"
+                  src="/static/clothing-images/1.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 1"
+                  src="/static/clothing-images/2.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 2"
+                  src="/static/clothing-images/3.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 3"
+                  src="/static/clothing-images/4.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 4"
+                  src="/static/clothing-images/5.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 5"
+                  src="/static/clothing-images/6.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 6"
+                  src="/static/clothing-images/7.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 7"
+                  src="/static/clothing-images/8.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 8"
+                  src="/static/clothing-images/9.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 9"
+                  src="/static/clothing-images/10.jpg"
+                  alt=""
+                  height="100"
+                />
+                <img
+                  if.bind="$index % 11 === 10"
+                  src="/static/clothing-images/11.jpg"
+                  alt=""
+                  height="100"
+                />
               </div>
               <!-- amount -->
               <div class="sessionProduct__code--amount">
@@ -251,8 +314,6 @@
               </div>
               <!-- time -->
               <!-- <div class="sessionProduct__code--"> ${sessionProduct.time} </div> -->
-              <!-- code -->
-              <!-- <div class="sessionProduct__code--code">${sessionProduct.code}</div> -->
               <!-- price -->
               <div class="sessionProduct__code--price">
                 ${(sessionProduct.price).toLocaleString("en")}

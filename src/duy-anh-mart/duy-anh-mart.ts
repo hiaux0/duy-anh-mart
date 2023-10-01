@@ -11,6 +11,7 @@ import {
   EMPTY_PRODUCT,
   TEST_PRODUCT,
   SessionProduct,
+  Customer,
 } from "./ProductEntity";
 
 import "./duy-anh-mart.scss";
@@ -38,6 +39,7 @@ export class DuyAnhMart {
   private updatedProductName: string;
   private updatedProductPrice: number;
   private sessionCollection: SessionProduct[] = [];
+  private customerDatabase: Customer[] = [];
   private amountForProduct: number;
   private showHelpContent = false;
   private quickMode = QUICK_MODE;
@@ -99,10 +101,30 @@ export class DuyAnhMart {
   }
 
   attached() {
+    this.initCustomerDatabase();
+    this.fillSession();
     this.addListeners();
     this.addKeyListeners();
     outsideListener(this.helpContentRef, [this.helpLabelRef], () => {
       this.showHelpContent = false;
+    });
+  }
+
+  private initCustomerDatabase() {
+
+    /* prettier-ignore */ this.customerDatabase.push({ code: "88012056"     , name: "Linh", phone: '089 12345' });
+    /* prettier-ignore */ this.customerDatabase.push({ code: "93682961"     , name: "Ha"  , phone: '091 34567' });
+    /* prettier-ignore */ this.customerDatabase.push({ code: "8935047600239", name: "Jun" , phone: '067 45678' });
+  }
+
+  private fillSession() {
+    Object.entries(this.productDatabase.database).forEach(([code, product]) => {
+      const sessionProduct: SessionProduct = {
+        ...product,
+        code,
+        count: 1,
+      };
+      this.sessionCollection.push(sessionProduct);
     });
   }
 
@@ -121,11 +143,11 @@ export class DuyAnhMart {
       }
     });
 
-    this.productCodeInputRef.addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter") {
-        this.handleProductCodeChanged();
-      }
-    });
+    // this.productCodeInputRef.addEventListener("keydown", (ev) => {
+    //   if (ev.key === "Enter") {
+    //     this.handleProductCodeChanged();
+    //   }
+    // });
 
     // this.amountForProductRef.addEventListener("keydown", (ev) => {
     //   if (ev.key === "Enter") {
@@ -133,22 +155,22 @@ export class DuyAnhMart {
     //   }
     // });
 
-    this.newProductPriceInputRef.addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter") {
-        this.addNewProduct();
-      }
-    });
+    // this.newProductPriceInputRef.addEventListener("keydown", (ev) => {
+    //   if (ev.key === "Enter") {
+    //     this.addNewProduct();
+    //   }
+    // });
 
-    this.updateProductNameRef.addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter") {
-        this.updateProduct();
-      }
-    });
-    this.updateProductPriceRef.addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter") {
-        this.updateProduct();
-      }
-    });
+    // this.updateProductNameRef.addEventListener("keydown", (ev) => {
+    //   if (ev.key === "Enter") {
+    //     this.updateProduct();
+    //   }
+    // });
+    // this.updateProductPriceRef.addEventListener("keydown", (ev) => {
+    //   if (ev.key === "Enter") {
+    //     this.updateProduct();
+    //   }
+    // });
   }
 
   private handleProductCodeChanged(shouldAddToCollection = true) {
@@ -221,7 +243,7 @@ export class DuyAnhMart {
     if (this.quickMode) {
       console.log("hereree");
       window.setTimeout(() => {
-        this.productCodeInputRef.blur();
+        // this.productCodeInputRef.blur();
         // this.newProductPriceInputRef.focus();
         this.newProductNameInputRef.focus();
       }, 100);
@@ -247,8 +269,8 @@ export class DuyAnhMart {
   }
 
   private focusProductCodeInput() {
-    this.productCodeInputRef.focus();
-    this.productCodeInputRef.value = "";
+    // this.productCodeInputRef.focus();
+    // this.productCodeInputRef.value = "";
   }
 
   private updateProduct(): void {
@@ -299,8 +321,8 @@ export class DuyAnhMart {
     this.clearCurrentProduct();
 
     this.newProductName = this.productCode = "";
-    this.productCodeInputRef.value = "";
-    this.productCodeInputRef.focus();
+    // this.productCodeInputRef.value = "";
+    // this.productCodeInputRef.focus();
     this.sessionSum = undefined;
     this.showHelpContent = false;
 

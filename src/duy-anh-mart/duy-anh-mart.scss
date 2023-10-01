@@ -67,9 +67,9 @@ $mainPadding: 30px;
     display: flex;
 
     .leftContainer {
-      width: 50%;
+      // width: 50%;
       max-width: 340px;
-      margin-right: 75px;
+      // margin-right: 75px;
 
       .findProductContainer {
         padding: 20px;
@@ -154,7 +154,18 @@ $mainPadding: 30px;
     }
 
     .rightContainer {
-      width: 631px;
+      // width: 631px;
+
+      .customerContainer {
+
+        //customer
+        .sessionProduct__code,
+        .sessionProduct__header {
+          &--name {
+            width: 85px !important;
+          }
+        }
+      }
 
       .sessionContainer {
         padding: 15px;
@@ -209,12 +220,21 @@ $mainPadding: 30px;
               }
             }
 
+            &--phone {
+              width: 100px;
+            }
+
             &--name {
               width: 230px;
             }
 
+            &--image {
+              width: 120px;
+            }
+
             &--code {
-              width: 15px;
+              width: 145px;
+              margin-left: 20px;
             }
           }
         }
@@ -267,7 +287,8 @@ $mainPadding: 30px;
 }
 
 .hiddenFooterContainer {
-  display: flex;
+  display: none;
+  // display: flex;
   color: #aaa;
 
   div {
